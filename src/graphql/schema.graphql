@@ -1,0 +1,35 @@
+schema {
+    query: Query
+}
+
+type Employee {
+  employeeId: ID!
+  employeeName: String!
+  relatesTo: EmployeeRelation
+}
+
+type Department {
+  departmentId: ID!
+  departmentName: String!
+  relatesTo: DepartmentRelation
+}
+
+type Query {
+  listEmployees: Department
+  employeeInfo(employeeId: ID!): Employee
+  employee(employeeId: ID!): Employee
+  department(departmentId: ID!): Department
+}
+
+type EmployeeRelation{
+  department: Department!
+  name: String
+}
+
+type DepartmentRelation{
+  employees(startWith: String): [Employee!] @cost(complexity: 1)
+  parentDepartment: Department @cost(complexity: 1)
+}
+
+
+
